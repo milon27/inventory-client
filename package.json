@@ -2,6 +2,7 @@
   "name": "client",
   "version": "1.0.0",
   "private": true,
+  "main": "server.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,6 +12,8 @@
     "axios": "^0.21.1",
     "exceljs": "^4.2.0",
     "file-saver": "^2.0.5",
+    "firebase-admin": "^9.4.2",
+    "firebase-functions": "^3.13.1",
     "next": "10.0.5",
     "qrcode.react": "^1.0.1",
     "react": "17.0.1",

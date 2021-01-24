@@ -1,0 +1,21 @@
+{
+  "hosting": {
+    "public": "public",
+    "site": "m27inventory",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "inventoryNextFun"
+      }
+    ]
+  },
+  "functions": {
+    "source": ".",
+    "runtime": "nodejs12"
+  }
+}
