@@ -1,6 +1,6 @@
 import Body from '../component/layout/Body';
 import Footer from '../component/layout/Footer';
-import Head from 'next/Head'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useContext, useState, useEffect } from 'react';
 import { DispatchContext, StateContext } from '../utils/context/AppContext';
