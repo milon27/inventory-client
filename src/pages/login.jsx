@@ -1,4 +1,3 @@
-import Header from '../component/layout/Header';
 import Body from '../component/layout/Body';
 import Footer from '../component/layout/Footer';
 import Head from 'next/Head'
@@ -13,7 +12,7 @@ import URL from '../utils/URL';
 
 
 export default function login() {
-    const { auth, app } = useContext(StateContext)
+    const { auth } = useContext(StateContext)
     const { authDispatch, appDispatch } = useContext(DispatchContext)
 
     const router = useRouter()

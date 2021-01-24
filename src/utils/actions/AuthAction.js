@@ -1,7 +1,6 @@
 import Define from "../Define"
 import Types from "./Types"
 import axios from 'axios'
-import Define from './../Define';
 
 axios.defaults.baseURL = `${Define.BASE_URL}`
 

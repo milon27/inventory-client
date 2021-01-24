@@ -1,4 +1,3 @@
-
 import Footer from '../component/layout/Footer';
 import Header from '../component/layout/Header';
 import Body from '../component/layout/Body';
