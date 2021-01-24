@@ -1,0 +1,17 @@
+const Types = {
+    START_LOADING: "START_LOADING",
+    STOP_LOADING: "STOP_LOADING",
+    SET_RESPONSE: "SET_RESPONSE",
+    REMOVE_RESPONSE: "REMOVE_RESPONSE",
+    RELOAD: "RELOAD",
+    //atuh
+    LOGIN: "LOGIN",
+    LOGOUT: "LOGOUT",
+    // crud types
+    ADD_DATA: "ADD_DATA",
+    UPDATE_DATA: "UPDATE_DATA",
+    DELETE_DATA: "DELETE_DATA",
+    GET_ALL_DATA: "GET_ALL_DATA",
+    CHANGE_STOCK: "CHANGE_STOCK"
+}
+export default Types;

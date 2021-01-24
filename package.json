@@ -1,0 +1,20 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "exceljs": "^4.2.0",
+    "file-saver": "^2.0.5",
+    "next": "10.0.5",
+    "qrcode.react": "^1.0.1",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-qr-reader": "^2.2.1"
+  }
+}

@@ -1,0 +1,21 @@
+.qr-img{
+    margin: auto;
+}
+
+*,p,h1,h3,span{
+    font-family: 'Nunito', sans-serif;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: rgb(74 74 74);
+    font-weight: bold;
+}
+
+header{
+    box-shadow: 2px 2px 2px #0000ff1a;
+}
+
+.card{
+    border-radius: 0.66rem;
+}
+

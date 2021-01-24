@@ -1,0 +1,25 @@
+/* desktop */
+@media (min-width:700px){
+    .part-img{
+        width: 60px;
+    }
+    .part-item{
+        height: 60px;
+        align-items: center;
+        display: flex;
+        width: 75%;
+        padding: 5px;
+    }
+
+    .desk-img{
+        width: 30%;
+        margin: auto;
+    }
+
+    .nav-link{
+        display: flex;
+        align-items: center;
+    }
+    
+    /* end desktop */
+}
