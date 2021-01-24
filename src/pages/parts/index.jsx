@@ -133,7 +133,7 @@ export default function index({ data }) {
                     </div>
                     <div className="row py-4">
                         <ModalAddPart id="addPart" value={{ input, setInput, initState }} />
-                        <div className="col-md-6">
+                        <div className="col-md-6 m27-mb-3">
                             <h3>All Part List</h3>
                             <input className="form-control" placeholder="Search by parts title" onChange={searchNow} />
                         </div>

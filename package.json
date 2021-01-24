@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "fdeploy": "npm run build && firebase deploy --only functions"
   },
+  "proxy": "https://us-central1-brick-factory-027.cloudfunctions.net/inventoryapi/api/",
   "dependencies": {
     "axios": "^0.21.1",
     "exceljs": "^4.2.0",
@@ -15,6 +17,7 @@
     "firebase-admin": "^9.4.2",
     "firebase-functions": "^3.13.1",
     "next": "10.0.5",
+    "nprogress": "^0.2.0",
     "qrcode.react": "^1.0.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
