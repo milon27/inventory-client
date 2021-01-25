@@ -3,7 +3,7 @@ import Types from "./Types"
 import axios from 'axios'
 
 axios.defaults.baseURL = `${Define.BASE_URL}`
-axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+//axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 const AuthAction = {
     dispatch: null,

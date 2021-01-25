@@ -9,7 +9,6 @@
     "start": "next start",
     "fdeploy": "npm run build && firebase deploy --only functions"
   },
-  "proxy": "https://us-central1-brick-factory-027.cloudfunctions.net/inventoryapi/api/",
   "dependencies": {
     "axios": "^0.21.1",
     "exceljs": "^4.2.0",

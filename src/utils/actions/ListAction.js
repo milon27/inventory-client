@@ -3,8 +3,7 @@ import Types from './Types';
 import Define from './../Define';
 
 axios.defaults.baseURL = `${Define.BASE_URL}`
-
-axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+//axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 
 const ListAction = {
