@@ -15,9 +15,11 @@ import AppAction from './../../utils/actions/AppAction';
 import { DispatchContext } from "../../utils/context/AppContext";
 import Response from './../../utils/Response';
 
+
 export default function ScanOut() {
     const [cart, setCart] = useState([])
     const router = useRouter()
+
 
     const { appDispatch } = useContext(DispatchContext)
 
@@ -56,18 +58,20 @@ export default function ScanOut() {
             <Header title="Scan Out" />
             <Body>
                 <ProtectedContent url={`scan-out/`} />
-                <div className="row">
-                    <div className="col-md-12">
-                        <Alert />
-                        <Loading color="info" />
+                {(typeof window !== "undefined" && window.innerWidth > 700) ? <>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <Alert />
+                            <Loading color="info" />
+                        </div>
                     </div>
-                </div>
+                </> : <></>}
                 <div className="row">
                     <div className="col-md-4 col-sm-6 col-xs-12">
                         <div>
                             {process.browser ?
                                 <QrReader
-                                    delay={150}
+                                    delay={50}
                                     onError={handleError}
                                     onScan={handleScan}
                                     style={{ width: '100%' }}
@@ -75,6 +79,14 @@ export default function ScanOut() {
                                 :
                                 <></>}
                         </div>
+                        {(typeof window !== "undefined" && window.innerWidth <= 700) ? <>
+                            <div className="row mt-2">
+                                <div className="col-md-12">
+                                    <Alert />
+                                    <Loading color="info" />
+                                </div>
+                            </div>
+                        </> : <></>}
                         <div className="my-3 text-center">
                             <button onClick={gotoCart} className="btn btn-primary mx-3">Confrim Scan Out</button>
                         </div>

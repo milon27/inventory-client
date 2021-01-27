@@ -3,8 +3,8 @@ import Types from './Types';
 import Define from './../Define';
 
 axios.defaults.baseURL = `${Define.BASE_URL}`
-//axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-
+//axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 const ListAction = {
     dispatch: null,
@@ -125,35 +125,13 @@ const ListAction = {
             })
         });
     },
+
     updateData: (url, updateData) => {
         return new Promise((resolve, reject) => {
             axios.put(url, updateData).then((res) => {
                 if (res.status === 200) {
                     //dispatch the global state
-
                     const updated_obj = res.data.response
-
-                    ListAction.dispatch({
-                        type: Types.UPDATE_DATA,
-                        payload: updated_obj
-                    });
-                    resolve({ message: res.data.message });
-                } else {
-                    reject({ message: res.data.message });
-                }
-            }).catch((e) => {
-                console.error("erroe: ", e)
-                reject(e);
-            })
-        });
-    }, updateDataPatch: (url, updateData) => {
-        return new Promise((resolve, reject) => {
-            axios.patch(url, updateData).then((res) => {
-                if (res.status === 200) {
-                    //dispatch the global state
-
-                    const updated_obj = res.data.response
-
                     ListAction.dispatch({
                         type: Types.UPDATE_DATA,
                         payload: updated_obj

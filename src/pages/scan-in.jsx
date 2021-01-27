@@ -67,12 +67,14 @@ export default function scanIn() {
             <Header title="Scan In" />
             <Body>
                 <ProtectedContent url={`scan-in/`} />
-                <div className="row">
-                    <div className="col-md-12">
-                        <Alert />
-                        <Loading color="info" />
+                {(typeof window !== "undefined" && window.innerWidth > 700) ? <>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <Alert />
+                            <Loading color="info" />
+                        </div>
                     </div>
-                </div>
+                </> : <></>}
                 <div className="row">
                     <div className="col-md-4 col-sm-6 col-xs-12">
                         {process.browser ?
@@ -91,10 +93,23 @@ export default function scanIn() {
                             <span className="part-item  ">ID : {result.id}</span>
                             <span className="part-item  ">Title : {result.part_title}</span>
                             {/* <span className="part-item ">Quantity : {result.part_stock}</span> */}
+                            {(typeof window !== "undefined" && window.innerWidth <= 700) ? <>
+                                <div className="row mt-2">
+                                    <div className="col-md-12">
+                                        <Alert />
+                                        <Loading color="info" />
+                                    </div>
+                                </div>
+                            </> : <></>}
+
+
                             <span className="part-item ">
                                 <button onClick={onUpdate} className="btn btn-primary mx-3">Confrim Scan In</button>
                             </span>
                         </li>
+
+
+
                         <div className="row">
                             <div className="col-md-12">
                                 <ul className="list-group" >
@@ -114,6 +129,6 @@ export default function scanIn() {
             </Body>
             <Footer />
 
-        </div>
+        </div >
     )
 }

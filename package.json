@@ -7,12 +7,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "fdeploy": "npm run build && firebase deploy --only functions"
+    "fdeploy": "npm run build && firebase deploy --only hosting,functions:juzNextFun"
   },
   "dependencies": {
     "axios": "^0.21.1",
     "exceljs": "^4.2.0",
     "file-saver": "^2.0.5",
+    "firebase": "^8.2.4",
     "firebase-admin": "^9.4.2",
     "firebase-functions": "^3.13.1",
     "next": "10.0.5",

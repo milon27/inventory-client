@@ -50,7 +50,7 @@ export default function Part({ part }) {
                                             level={"H"}
                                             includeMargin={true}
                                         />
-                                        <a style={{ width: '290px', margin: "auto" }} className="btn btn-primary card-link" onClick={downloadQR}> Download QR </a>
+                                        <a className="btn btn-primary card-link qr-btn" onClick={downloadQR}> Download QR </a>
                                     </div>
                                 </div>
 

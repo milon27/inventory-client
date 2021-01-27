@@ -28,15 +28,15 @@ export default function Header({ title }) {
             <header className="">
                 <nav className="navbar navbar-expand-lg navbar-light bg-light px-5">
 
-                    <Link href='/'>
-                        <a className="navbar-brand" ><h4 className="text-primary">Juz Air Inventory</h4></a>
+                    <Link href={URL.HOME}>
+                        <a className="navbar-brand" ><h4 className="text-primary">Juz Air</h4></a>
                     </Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav ml-auto">
+                        <div className="navbar-nav ml-auto">
 
                             <Link className="nav-item active" href={URL.HOME}>
                                 <a className="nav-link" >Home </a>
@@ -61,7 +61,7 @@ export default function Header({ title }) {
                             </Link>
                             {auth.role === Define.S_ADMIN ?
                                 <Link className="nav-item active" href={URL.USER_LIST}>
-                                    <a className="nav-link"> User List</a>
+                                    <a className="nav-link">User List</a>
                                 </Link>
                                 : <></>}
 
@@ -71,7 +71,7 @@ export default function Header({ title }) {
 
 
 
-                        </ul>
+                        </div>
 
                     </div>
                 </nav>

@@ -35,33 +35,35 @@ export default function Orders({ data }) {
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <table className="table table-striped ">
-                            <thead className="bg-primary text-light">
-                                <tr>
-                                    <th scope="col">SO Number</th>
-                                    <th scope="col">Admin ID</th>
-                                    <th scope="col">Customer Name</th>
-                                    <th scope="col">Order Desc</th>
-                                    <th scope="col">Options</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {orders.map(item => {
-                                    return <tr key={item.id} >
-                                        <th scope="row"> {item.so_num}</th>
-                                        <td>{item.admin_id}</td>
-                                        <td>{item.customer_name}</td>
-                                        <td>{item.order_desc}</td>
-                                        <td>
-                                            <Link href={`/orders/${item.id}`}>
-                                                <a className="btn btn-primary">View Details</a>
-                                            </Link>
-
-                                        </td>
+                        <div className="table-responsive">
+                            <table className="table table-striped ">
+                                <thead className="bg-primary text-light">
+                                    <tr>
+                                        <th scope="col">SO Number</th>
+                                        <th scope="col">Admin ID</th>
+                                        <th scope="col">Customer Name</th>
+                                        <th scope="col">Order Desc</th>
+                                        <th scope="col">Options</th>
                                     </tr>
-                                })}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {orders.map(item => {
+                                        return <tr key={item.id} >
+                                            <th scope="row"> {item.so_num}</th>
+                                            <td>{item.admin_id}</td>
+                                            <td>{item.customer_name}</td>
+                                            <td>{item.order_desc}</td>
+                                            <td>
+                                                <Link href={`/orders/${item.id}`}>
+                                                    <a className="btn btn-primary">View Details</a>
+                                                </Link>
+
+                                            </td>
+                                        </tr>
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </Body>

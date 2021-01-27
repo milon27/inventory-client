@@ -3,6 +3,7 @@ import { useContext, useEffect } from 'react';
 import { DispatchContext, StateContext } from './../../../utils/context/AppContext';
 import ListAction from './../../../utils/actions/ListAction';
 import Define from '../../../utils/Define';
+import AuthAction from '../../../utils/actions/AuthAction';
 export default function TableUserList() {
 
     const { userlist } = useContext(StateContext)
@@ -34,8 +35,19 @@ export default function TableUserList() {
             return;
         }
         //delete the user from user list.
-        await ListAction.getInstance(userlistDispatch)
-            .deleteData(`v1/delete/${Define.user_collection}/${e.target.id}`, e.target.id)
+
+        //ask for confirmation
+        if (confirm("Are you sure,you want to delete?")) {
+            //update
+            //AppAction.getInstance(appDispatch).START_LOADING();
+            await AuthAction.getInstance(userlistDispatch)
+                .deleteUser(`auth/delete-user/${e.target.id}`, e.target.id)
+            //AppAction.getInstance(appDispatch).START_LOADING();
+        } else {
+            console.log("cancel");
+        }
+
+
     }
 
 
@@ -62,7 +74,7 @@ export default function TableUserList() {
                                             <td>{item.id}</td>
                                             <td>{item.email.split('@')[0]}</td>
                                             <td>{item.email}</td>
-                                            <td>{item.role}</td>
+                                            <td>{item.role === Define.S_ADMIN ? "Super Admin" : "Admin"}</td>
                                             <td><i id={item.id} className="fa fa-trash" ></i></td>
                                         </tr>)
                                     })

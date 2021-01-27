@@ -5,31 +5,43 @@ import { DispatchContext, StateContext } from './../../utils/context/AppContext'
 import ListAction from './../../utils/actions/ListAction';
 import AppAction from './../../utils/actions/AppAction';
 import Response from './../../utils/Response';
+import Types from '../../utils/actions/Types';
 
 
 
 export default function CartList() {
 
-    const { auth } = useContext(StateContext)
-    const { appDispatch, ordersDispatch } = useContext(DispatchContext)
+    const { auth, partlist } = useContext(StateContext)
+    const { appDispatch, ordersDispatch, partlistDispatch } = useContext(DispatchContext)
 
     const [cart, setCart] = useState(
         (process.browser) ?
             localStorage.getItem(Define.CART_LOCAL) ? JSON.parse(localStorage.getItem(Define.CART_LOCAL)) : []
             : []
     )
-    const [orderInfo, setOrderInfo] = useState({
+
+    const orderinfoinit = {
         so_num: "",
         admin_id: "",
         customer_name: "",
         order_desc: "",
         product_list: []
-    })
+    }
+    const [orderInfo, setOrderInfo] = useState(orderinfoinit)
 
 
 
     //
     useEffect(() => {
+        //load parts
+
+        const loadpart = async () => {
+            ListAction.getSource()
+            await ListAction.getInstance(partlistDispatch).getAll(Define.part_collection)
+        }
+        loadpart()
+
+        //tmp make all 0
         setCart(cart => {
             const arr = cart.map(itm => {
                 itm.part_stock = 0
@@ -42,15 +54,23 @@ export default function CartList() {
     //stockChange
     const stockChange = (e) => {
         const id = e.target.id
+
         setCart(cart => {
             const arr = cart.map(itm => {
                 if (itm.id === id) {
-                    itm.part_stock = parseInt(e.target.value)
+                    const actualstockitem = partlist.find(ii => ii.id === id)
+                    if (actualstockitem.part_stock >= parseInt(e.target.value)) {
+                        itm.part_stock = parseInt(e.target.value)
+                    }
+                    else {
+                        alert("Stock Not Available,Stock=" + actualstockitem.part_stock)
+                    }
                 }
                 return itm;
             })
             return arr;
         })
+
     }
 
     //onCustomerChnage
@@ -63,6 +83,7 @@ export default function CartList() {
         if (process.browser) {
             localStorage.removeItem(Define.CART_LOCAL)
         }
+        setOrderInfo(orderinfoinit)
     }
 
     //completeOrder
@@ -75,9 +96,6 @@ export default function CartList() {
             AppAction.getInstance(appDispatch).SET_RESPONSE(Response(false, "Enter All Field Value", "Add Some parts in the cart", "danger"));
             return
         }
-
-        //return console.log(orderInfo);
-
         //list action to order list
         AppAction.getInstance(appDispatch).START_LOADING();
         //add new info
@@ -85,6 +103,9 @@ export default function CartList() {
             AppAction.getInstance(appDispatch).STOP_LOADING();
             AppAction.getInstance(appDispatch).SET_RESPONSE(Response(true, res.message, `Order Created Successfully`, "success"));
             AppAction.getInstance(appDispatch).RELOAD();
+
+            clearCart()//clear cart info after order complete
+
         }).catch(e => {
             AppAction.getInstance(appDispatch).STOP_LOADING();
             AppAction.getInstance(appDispatch).SET_RESPONSE(Response(false, e.message, "Something Went Wrong! try again", "danger"));
@@ -145,11 +166,20 @@ export default function CartList() {
                                                     <div className="d-flex justify-content-between">
                                                         <div>
                                                             <h5>Title: {itm.part_title}</h5>
+
+                                                            <p className="mb-3 text-muted text-uppercase small">Stock:
+
+
+                                                            {/* {console.log("here", partlist.find(ii => ii.id === itm.id))} */}
+                                                                {(partlist.find(ii => ii.id === itm.id) !== undefined) ? partlist.find(ii => ii.id === itm.id).part_stock : ""}
+
+                                                            </p>
                                                             <p className="mb-3 text-muted text-uppercase small">ID: {itm.id}</p>
                                                         </div>
                                                         <div>
                                                             <div className="def-number-input number-input safari_only mb-0 w-100">
-                                                                <input id={itm.id} onChange={stockChange} className="form-control" min="1" name="quantity" value={itm.part_stock} type="number" />
+                                                                <input id={itm.id} onChange={stockChange} className="form-control" min="1" name="quantity" value={itm.part_stock}
+                                                                    type="number" />
                                                             </div>
                                                             <small id="passwordHelpBlock" className="form-text text-muted text-center">
                                                                 (Quantity)

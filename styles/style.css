@@ -1,6 +1,5 @@
-.qr-img{
-    margin: auto;
-}
+
+
 
 *,p,h1,h3,span{
     font-family: 'Nunito', sans-serif;
@@ -19,3 +18,22 @@ header{
     border-radius: 0.66rem;
 }
 
+.container {
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5); /* Black see-through */
+  color: #f1f1f1;
+  transition: .5s ease;
+  opacity:0;
+  color: white;
+  text-align: center;
+}
+
+.img-container:hover .overlay {
+  opacity: 1;
+}

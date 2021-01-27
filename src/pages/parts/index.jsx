@@ -13,14 +13,14 @@ import Alert from "../../component/layout/Alert";
 import Loading from "../../component/layout/Loading";
 import ModalAddPart from "../../component/layout/modal/ModalAddPart";
 
-import Exceljs from 'exceljs'
+import Exceljs from 'exceljs';
 import { saveAs } from "file-saver";
 
 
 
-export default function index({ data }) {
+export default function index() {//{ data }
 
-    const { partlist } = useContext(StateContext)
+    const { app, partlist } = useContext(StateContext)
     const { partlistDispatch } = useContext(DispatchContext)
 
     const initState = {
@@ -36,27 +36,44 @@ export default function index({ data }) {
         purchased_date: new Date(),
     };
     const [input, setInput] = useState(initState);
-    const [key, setKey] = useState("");
+    const [data, setData] = useState([]);
+
 
     //life cycle
     useEffect(() => {
-        partlistDispatch({
-            type: Types.GET_ALL_DATA,
-            payload: data//an array
-        });
+        // partlistDispatch({
+        //     type: Types.GET_ALL_DATA,
+        //     payload: data//an array
+        // });
+
+        const loadpart = async () => {
+            ListAction.getSource()
+            const res = await ListAction.getInstance(partlistDispatch).getAll(Define.part_collection)
+            const arr = res.data
+            setData(arr)
+        }
+        loadpart()
+
         return () => {
             //cleanup
         }
     }, [])
 
+    useEffect(() => {
+        setData(partlist)
+        return () => {
+            //cleanup
+        }
+    }, [app.reload])
+
 
     //seach part:
     const searchNow = (e) => {
-        const key = e.target.value.toString()
+        const key = e.target.value.toString().toLowerCase().trim()
         if (key.length > 2) {
             const found = partlist.filter(itm => {
-                const title = itm.part_title
-                if (title.includes(e.target.value)) {
+                const title = itm.part_title.toLowerCase().trim()
+                if (title.includes(key)) {
                     return true;
                 } else {
                     return false;
@@ -72,7 +89,6 @@ export default function index({ data }) {
                 payload: data//an array
             });
         }
-
     }
 
 
@@ -110,7 +126,7 @@ export default function index({ data }) {
 
             const blob = new Blob([buffer], { type: fileType });
 
-            saveAs(blob, 'milon27excel' + fileExtension);
+            saveAs(blob, 'excel' + fileExtension);
 
         } catch (e) {
             console.log("xlsx error", e);
@@ -134,16 +150,15 @@ export default function index({ data }) {
                     <div className="row py-4">
                         <ModalAddPart id="addPart" value={{ input, setInput, initState }} />
                         <div className="col-md-6 m27-mb-3">
-                            <h3>All Part List</h3>
+                            <h4>All Part List</h4>
                             <input className="form-control" placeholder="Search by parts title" onChange={searchNow} />
                         </div>
-                        <div className="col-md-6 text-right">
+                        <div className="col-md-6 m27-d-text-right">
                             {/* open modal form when click on it */}
-                            <button onClick={generatePdf} type="button" className="btn btn-info badge-pill px-4" >
-                                Generate PDF</button>
-                            <button type="button" className="btn btn-primary badge-pill px-4 mx-2" data-toggle="modal" data-target="#addPart">
+                            <button onClick={generatePdf} type="button" className="btn btn-info badge-pill px-4 m27-w100 m27-mb-3 " >
+                                Generate Excel</button>
+                            <button type="button" className="btn btn-primary badge-pill px-4 m27-w100 m27-mb-3 m27-d-ml-3" data-toggle="modal" data-target="#addPart">
                                 Add New Part</button>
-
                         </div>
                     </div>
                 </div>
@@ -154,16 +169,16 @@ export default function index({ data }) {
     )
 }
 
-export const getServerSideProps = async (context) => {
-    ListAction.getSource()
-    const res = await ListAction.getAll(Define.part_collection)
-    //console.log(res);
-    return {
-        props: {
-            data: res.data,//arry
-        }
-    }
-}
+// export const getServerSideProps = async (context) => {
+//     ListAction.getSource()
+//     const res = await ListAction.getAll(Define.part_collection)
+//     //console.log(res);
+//     return {
+//         props: {
+//             data: res.data,//arry
+//         }
+//     }
+// }
 
 // export const getStaticProps = async (context) => {
 //     return {

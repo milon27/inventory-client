@@ -1,7 +1,7 @@
 {
   "hosting": {
+    "site": "juzair",
     "public": "public",
-    "site": "m27inventory",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -10,7 +10,7 @@
     "rewrites": [
       {
         "source": "**",
-        "function": "inventoryNextFun"
+        "function": "juzNextFun"
       }
     ]
   },

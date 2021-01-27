@@ -5,7 +5,7 @@ const Define = {
     DATE_FORMAT_SIMPLE: "YYYY-MM-DD",
     S_ADMIN: "S_ADMIN",
     ADMIN: "ADMIN",
-    BASE_URL: "https://us-central1-brick-factory-027.cloudfunctions.net/inventoryapi/api/",
+    BASE_URL: "https://juz-air-inventory.web.app/api/",
     user_collection: "user_collection",
     part_collection: "part_collection",
     order_collection: "order_collection",

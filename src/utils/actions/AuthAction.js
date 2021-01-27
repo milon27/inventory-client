@@ -45,7 +45,7 @@ const AuthAction = {
             }
         })
     }, //end login
-    SignUp: (email, pass, role, dispatch) => {
+    SignUp: (email, pass, role) => {
         //http://localhost:2727/api/auth/create-user
         return new Promise(async (resolve, reject) => {
             try {
@@ -56,10 +56,10 @@ const AuthAction = {
                     const message = res.data.message;
                     //user loggedin offline
 
-                    //change global state
-                    dispatch({
+                    //change global state userlist
+                    AuthAction.dispatch({
                         type: Types.ADD_DATA,
-                        payload: user
+                        payload: user//new object
                     });
                     //resolve the  promise
                     resolve({ message, user });
@@ -71,7 +71,25 @@ const AuthAction = {
             }
         })
     },
-
+    deleteUser: (url, uid) => {///http://localhost:2727/api/auth/delete-user/:uid
+        return new Promise((resolve, reject) => {
+            axios.delete(url).then((res) => {
+                if (res.status === 200) {
+                    //dispatch the global state
+                    AuthAction.dispatch({
+                        type: Types.DELETE_DATA,
+                        payload: uid//send id
+                    });
+                    resolve({ message: res.data.message });
+                } else {
+                    reject({ message: res.data.message });
+                }
+            }).catch((e) => {
+                console.error("erroe: ", e)
+                reject(e);
+            })
+        });
+    },
     Logout: () => {
         //local storage change
         if (process.browser) {

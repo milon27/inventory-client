@@ -10,7 +10,8 @@ const server = next({
 });
 
 const nextjsHandle = server.getRequestHandler();
-exports.inventoryNextFun = https.onRequest((req, res) => {
+
+exports.juzNextFun = https.onRequest((req, res) => {
     return server.prepare()
         .then(() => {
             return nextjsHandle(req, res)

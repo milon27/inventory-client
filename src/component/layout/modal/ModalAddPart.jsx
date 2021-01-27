@@ -8,6 +8,7 @@ import ListAction from './../../../utils/actions/ListAction';
 import Input from '../form/Input';
 import { StateContext } from './../../../utils/context/AppContext';
 import Define from '../../../utils/Define';
+import FileUtil from '../../../fb/FileUtil';
 
 
 export default function ModalAddPart(props) {
@@ -44,26 +45,12 @@ export default function ModalAddPart(props) {
 
 
     //method
-    const uploadNew = (fb) => {//form data=fb=fd
 
-        AppAction.getInstance(appDispatch).START_LOADING();
-        //add new info
-        ListAction.getInstance(partlistDispatch).addData(`product/upload/part_collection`, fb).then(res => {
-            AppAction.getInstance(appDispatch).STOP_LOADING();
-            AppAction.getInstance(appDispatch).SET_RESPONSE(Response(true, res.message, `Part Created Successfully`, "success"));
-            AppAction.getInstance(appDispatch).RELOAD();
-            setInput(initState);
-        }).catch(e => {
-            AppAction.getInstance(appDispatch).STOP_LOADING();
-            AppAction.getInstance(appDispatch).SET_RESPONSE(Response(false, e.message, "Something Went Wrong! try again", "danger"));
-        });
-    }
-    const updateOld = (fb) => {
-        console.log("updating....");
-        AppAction.getInstance(appDispatch).START_LOADING();
+    const updatePart = (input) => {
+        console.log("updating....without image");
 
-        //add new info
-        ListAction.getInstance(partlistDispatch).updateData(`product/upload/part_collection`, fb).then(res => {
+        //update
+        ListAction.getInstance(partlistDispatch).updateData(`v1/add-data/part_collection`, input).then(res => {
             AppAction.getInstance(appDispatch).STOP_LOADING();
             AppAction.getInstance(appDispatch).SET_RESPONSE(Response(true, res.message, `Part Updated Successfully`, "success"));
             AppAction.getInstance(appDispatch).RELOAD();
@@ -73,13 +60,11 @@ export default function ModalAddPart(props) {
             AppAction.getInstance(appDispatch).SET_RESPONSE(Response(false, e.message, "Something Went Wrong! try again", "danger"));
         });
     }
-
-    const updateOldNoImage = (fb) => {
-        console.log("updating....without image");
-        AppAction.getInstance(appDispatch).START_LOADING();
+    const addNewPart = (input) => {
+        console.log("adding new part");
 
         //update
-        ListAction.getInstance(partlistDispatch).updateDataPatch(`product/upload/part_collection`, fb).then(res => {
+        ListAction.getInstance(partlistDispatch).addData(`v1/add-data/part_collection`, input).then(res => {
             AppAction.getInstance(appDispatch).STOP_LOADING();
             AppAction.getInstance(appDispatch).SET_RESPONSE(Response(true, res.message, `Part Updated Successfully`, "success"));
             AppAction.getInstance(appDispatch).RELOAD();
@@ -96,34 +81,45 @@ export default function ModalAddPart(props) {
         if (!isValidField()) {
             AppAction.getInstance(appDispatch).SET_RESPONSE(Response(false, "Empty Field Found", "Enter all feild value and try again", "danger"));
         } else {
-            //console.log(input);
-
-            const fd = new FormData()
-            fd.append("part_title", input.part_title)
-            fd.append("brand", input.brand)
-            fd.append("manufacturer_part_num", input.manufacturer_part_num)
-            fd.append("part_desc", input.part_desc)
-            fd.append("part_stock", parseInt(input.part_stock))
-            fd.append("store_location", input.store_location)
-            fd.append("supplier_name", input.supplier_name)
-            fd.append("purchased_date", input.purchased_date)
             //ck for the image:::
             if (input.parts_img.name === undefined) {
                 //we dont have any image while updating....
                 if (input.id == null || input.id == undefined) {
                     AppAction.getInstance(appDispatch).SET_RESPONSE(Response(false, "Empty Field Found", "Enter all feild value and try again", "danger"));
                 } else {
+                    //we dont have image & we are updating data
+                    AppAction.getInstance(appDispatch).START_LOADING();
                     input.part_stock = parseInt(input.part_stock)
-                    updateOldNoImage(input)
+                    updatePart(input)
                 }
-
             } else {
-                fd.append("parts_img", input.parts_img, input.parts_img.name)//file
+                AppAction.getInstance(appDispatch).START_LOADING();
                 if (input.id == null || input.id == undefined) {
-                    uploadNew(fd)
+                    //first upload the file
+                    FileUtil.uploadFile(input.parts_img)
+                        .then(res => {
+                            //success upload & upload new data
+                            input.parts_img = res.url
+                            input.part_stock = parseInt(input.part_stock)
+                            addNewPart(input)
+                        }).catch(e => {
+                            AppAction.getInstance(appDispatch).SET_RESPONSE(Response(false, e.message, "Enter all feild value and try again", "danger"));
+                            AppAction.getInstance(appDispatch).STOP_LOADING();
+                        })
                 } else {
-                    fd.append("id", input.id)
-                    updateOld(fd)
+                    //we are updating with new image
+                    FileUtil.uploadFile(input.parts_img)
+                        .then(res => {
+                            //success upload & updating data
+                            input.parts_img = res.url
+                            input.part_stock = parseInt(input.part_stock)
+                            updatePart(input)
+                        }).catch(e => {
+                            AppAction.getInstance(appDispatch).SET_RESPONSE(Response(false, e.message, "Enter all feild value and try again", "danger"));
+                            AppAction.getInstance(appDispatch).STOP_LOADING();
+                        })
+                    // fd.append("id", input.id)
+                    // updateOld(fd)
                 }
             }
         }

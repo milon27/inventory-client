@@ -4,13 +4,12 @@ import Alert from '../../component/layout/Alert';
 import Body from '../../component/layout/Body';
 import Footer from '../../component/layout/Footer';
 import Loading from '../../component/layout/Loading';
-import ProtectedContent from '../../component/ProtectedContent';
 import Header from './../../component/layout/Header';
 
 export default function cartList() {
     return (
         <>
-            <Header title="Scan In" />
+            <Header title="Cart List" />
             <Body>
                 {/* <ProtectedContent url={`scan-out/cart-list`} /> */}
                 <div className="row">

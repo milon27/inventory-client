@@ -42,7 +42,7 @@ export default function ModalAddUser(props) {
         } else {
             AppAction.getInstance(appDispatch).START_LOADING();
             //add new info
-            AuthAction.getInstance(authDispatch).SignUp(input.email, input.pass, input.role, userlistDispatch).then(res => {
+            AuthAction.getInstance(userlistDispatch).SignUp(input.email, input.pass, input.role).then(res => {
                 AppAction.getInstance(appDispatch).STOP_LOADING();
                 AppAction.getInstance(appDispatch).SET_RESPONSE(Response(true, res.message, `User Created Successfully `, "success"));
                 AppAction.getInstance(appDispatch).RELOAD();
