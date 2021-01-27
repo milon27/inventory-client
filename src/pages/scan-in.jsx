@@ -18,13 +18,29 @@ import Footer from '../component/layout/Footer'
 export default function scanIn() {
 
     const { appDispatch, partlistDispatch } = useContext(DispatchContext)
-
-
     const [result, setResult] = useState({})
+    const [done, setDone] = useState(false)
 
+
+    // function play() {
+    //     var beepsound = new Audio(
+    //         'https://www.soundjay.com/button/sounds/beep-01a.mp3');
+    //     beepsound.play();
+    // }
+
+    const onClear = () => {
+        setDone(false)
+        setResult({})
+    }
     const handleScan = (data) => {
         if (data) {
-            setResult(JSON.parse(data))
+            if (!done) {
+                setResult(JSON.parse(data))
+                var beepsound = new Audio('/beep.mp3');
+                beepsound.loop = false;
+                beepsound.play();
+                setDone(true)
+            }
         }
     }
     const handleError = (err) => {
@@ -54,7 +70,7 @@ export default function scanIn() {
                 AppAction.getInstance(appDispatch).STOP_LOADING();
                 AppAction.getInstance(appDispatch).SET_RESPONSE(Response(true, res.message, `Part Stock Updated Successfully`, "success"));
                 AppAction.getInstance(appDispatch).RELOAD();
-
+                onClear()
             }).catch(e => {
                 AppAction.getInstance(appDispatch).STOP_LOADING();
                 AppAction.getInstance(appDispatch).SET_RESPONSE(Response(false, e.message, "Something Went Wrong! try again", "danger"));
@@ -79,7 +95,7 @@ export default function scanIn() {
                     <div className="col-md-4 col-sm-6 col-xs-12">
                         {process.browser ?
                             <QrReader
-                                delay={150}
+                                delay={50}
                                 onError={handleError}
                                 onScan={handleScan}
                                 style={{ width: '100%' }}
@@ -88,7 +104,7 @@ export default function scanIn() {
                             <></>}
                     </div>
                     <div className="col-md-8 col-sm-6 col-xs-12">
-                        <li key={result.id} className="list-group-item d-flex justify-content-between align-items-center m-part">
+                        <li key={result.id} className="list-group-item d-flex justify-content-around align-items-center m-part">
                             <img className="part-img " src={result.parts_img} />
                             <span className="part-item  ">ID : {result.id}</span>
                             <span className="part-item  ">Title : {result.part_title}</span>
@@ -104,8 +120,13 @@ export default function scanIn() {
 
 
                             <span className="part-item ">
-                                <button onClick={onUpdate} className="btn btn-primary mx-3">Confrim Scan In</button>
+                                <button onClick={onUpdate} className="btn btn-primary mx-3">Confirm Scan In</button>
                             </span>
+
+                            <span className="part-item ">
+                                <button onClick={onClear} className="btn btn-danger mx-3">Clear Scan List</button>
+                            </span>
+
                         </li>
 
 

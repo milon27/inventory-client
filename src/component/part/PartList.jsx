@@ -51,7 +51,13 @@ export default function PartList({ data }) {
 
 
     return (
-        <div className="container">
+        <div className="container-fluid">
+
+            {/* <div className="row">
+                <div className="col-md-12">
+
+                </div>
+            </div> */}
             <div className="row">
                 <div className="col-md-12">
                     <ul className="list-group" onClick={onClickHandle}>
@@ -66,13 +72,14 @@ export default function PartList({ data }) {
                                         </div>
                                     </Link>
 
-                                    <span className="part-item  ">ID : {item.id}</span>
+                                    <span className="part-item  ">{item.id}
+                                    </span>
                                     <span className="part-item  ">Title : {item.part_title}</span>
                                     <span className="part-item ">Stock : {item.part_stock}</span>
+                                    <span className="part-item ">Supplier : {item.supplier_name}
+                                    </span>
+                                    <span className="part-item ">Date:{item.purchased_date}</span>
                                     <span className="part-item ">
-                                        {/* <Link href={`/parts/${item.id}`}>
-                                            <button className="btn btn-primary mx-3">Details</button>
-                                        </Link> */}
                                         <button id={item.id} btn="edit" className="btn btn-primary badge-pill px-4 mx-3" data-toggle="modal" data-target="#addPart">
                                             Edit</button>
                                         <button id={item.id} type="button" className="btn btn-danger badge-pill px-4">

@@ -12,7 +12,8 @@ export default function ModalAddUser(props) {
     //local state
     const initState = {
         email: "",
-        role: "ADMIN",
+        name: "",
+        role: Define.ADMIN,
         pass: ""
     };
     const [input, setInput] = useState(initState);
@@ -23,9 +24,9 @@ export default function ModalAddUser(props) {
     }
     //validation
     const isValidField = () => {
-        if (input.email === "") {
+        if (input.email === "" || input.nam === "") {
             return false;
-        } else if (input.pass === "") {
+        } else if (input.pass === "" || input.pass.length <= 6) {
             return false;
         } else {
             return true;
@@ -38,11 +39,11 @@ export default function ModalAddUser(props) {
 
 
         if (!isValidField()) {
-            AppAction.getInstance(appDispatch).SET_RESPONSE(Response(false, "Empty Field Found", "Enter all feild value and try again", "danger"));
+            AppAction.getInstance(appDispatch).SET_RESPONSE(Response(false, "Empty Field Found", "Enter all feild value,password should be more than 6 character and try again", "danger"));
         } else {
             AppAction.getInstance(appDispatch).START_LOADING();
             //add new info
-            AuthAction.getInstance(userlistDispatch).SignUp(input.email, input.pass, input.role).then(res => {
+            AuthAction.getInstance(userlistDispatch).SignUp(input.email, input.name, input.pass, input.role).then(res => {
                 AppAction.getInstance(appDispatch).STOP_LOADING();
                 AppAction.getInstance(appDispatch).SET_RESPONSE(Response(true, res.message, `User Created Successfully `, "success"));
                 AppAction.getInstance(appDispatch).RELOAD();
@@ -75,12 +76,21 @@ export default function ModalAddUser(props) {
                                     value={input.email}
                                     onChange={onChange}
                                 />
-                                <label htmlFor="">Enter Password:</label>
+                                <label htmlFor="">Enter Name:</label>
+                                <input type="text"
+                                    className="form-control"
+                                    name="name"
+                                    placeholder="User Name "
+                                    value={input.name}
+                                    onChange={onChange}
+                                />
+                                <label htmlFor="">Enter Password:(more than 6 character)</label>
                                 <input type="text"
                                     className="form-control"
                                     name="pass"
                                     placeholder="User Password "
                                     value={input.pass}
+                                    type="password"
                                     onChange={onChange}
                                 />
                                 <label htmlFor="">Select Role:</label>

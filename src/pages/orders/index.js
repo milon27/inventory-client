@@ -11,18 +11,49 @@ import Footer from './../../component/layout/Footer';
 
 export default function Orders({ data }) {
 
-    const { orders } = useContext(StateContext)
-    const { ordersDispatch } = useContext(DispatchContext)
+    const { orders, userlist } = useContext(StateContext)
+    const { ordersDispatch, userlistDispatch } = useContext(DispatchContext)
 
     useEffect(() => {
         ordersDispatch({
             type: Types.GET_ALL_DATA,
             payload: data//an array
         })
+
+
+        //load user list
+        const source = ListAction.getSource();
+        try {
+            const fetch = async () => {
+                await ListAction.getInstance(userlistDispatch).getAll(Define.user_collection)
+            }
+            fetch();
+
+        } catch (e) {
+
+        }
+
         return () => {
             //cleanup
+            source.cancel();
         }
     }, [])
+
+    const getAdminName = (id) => {
+
+        const found = userlist.find(element => element.id.trim() == id.trim());
+        if (found) {
+            if (found.name !== undefined) {
+                return found.name
+            } else {
+                return found.email.split('@')[0]
+            }
+        } else {
+            return "user deleted"
+        }
+
+    }
+
 
     return (
         <>
@@ -50,7 +81,11 @@ export default function Orders({ data }) {
                                     {orders.map(item => {
                                         return <tr key={item.id} >
                                             <th scope="row"> {item.so_num}</th>
-                                            <td>{item.admin_id}</td>
+                                            <td>{
+
+                                                getAdminName(item.admin_id)
+
+                                            }</td>
                                             <td>{item.customer_name}</td>
                                             <td>{item.order_desc}</td>
                                             <td>

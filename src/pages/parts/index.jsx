@@ -13,6 +13,7 @@ import Alert from "../../component/layout/Alert";
 import Loading from "../../component/layout/Loading";
 import ModalAddPart from "../../component/layout/modal/ModalAddPart";
 
+import moment from 'moment';
 import Exceljs from 'exceljs';
 import { saveAs } from "file-saver";
 
@@ -33,7 +34,7 @@ export default function index() {//{ data }
         store_location: "",
         supplier_name: "",
         parts_img: "",
-        purchased_date: new Date(),
+        purchased_date: moment(new Date()).format("DD-MM-YYYY"),
     };
     const [input, setInput] = useState(initState);
     const [data, setData] = useState([]);
@@ -73,7 +74,10 @@ export default function index() {//{ data }
         if (key.length > 2) {
             const found = partlist.filter(itm => {
                 const title = itm.part_title.toLowerCase().trim()
-                if (title.includes(key)) {
+                const supplier = itm.supplier_name.toLowerCase().trim()
+                const date = itm.purchased_date.toLowerCase().trim()
+
+                if (title.includes(key) || supplier.includes(key) || date.includes(key)) {
                     return true;
                 } else {
                     return false;
@@ -151,7 +155,7 @@ export default function index() {//{ data }
                         <ModalAddPart id="addPart" value={{ input, setInput, initState }} />
                         <div className="col-md-6 m27-mb-3">
                             <h4>All Part List</h4>
-                            <input className="form-control" placeholder="Search by parts title" onChange={searchNow} />
+                            <input className="form-control" placeholder="Search by parts title,supplier,purchase date" onChange={searchNow} />
                         </div>
                         <div className="col-md-6 m27-d-text-right">
                             {/* open modal form when click on it */}

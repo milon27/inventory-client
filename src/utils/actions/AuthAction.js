@@ -45,11 +45,16 @@ const AuthAction = {
             }
         })
     }, //end login
-    SignUp: (email, pass, role) => {
+    SignUp: (email, name, pass, role) => {
         //http://localhost:2727/api/auth/create-user
+
+        const user = {
+            email, name, pass, role
+        }
+
         return new Promise(async (resolve, reject) => {
             try {
-                const res = await axios.post(`auth/create-user`, { email, pass, role })
+                const res = await axios.post(`auth/create-user`, user)
                 //console.log("res in authaction; ", res);
                 if (!res.data.error) {
                     const user = res.data.response;

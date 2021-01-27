@@ -72,7 +72,7 @@ export default function TableUserList() {
                                     userlist.map((item) => {
                                         return (<tr key={item.id}>
                                             <td>{item.id}</td>
-                                            <td>{item.email.split('@')[0]}</td>
+                                            <td>{item.name ? item.name : item.email.split('@')[0]}</td>
                                             <td>{item.email}</td>
                                             <td>{item.role === Define.S_ADMIN ? "Super Admin" : "Admin"}</td>
                                             <td><i id={item.id} className="fa fa-trash" ></i></td>

@@ -18,6 +18,7 @@ import Response from './../../utils/Response';
 
 export default function ScanOut() {
     const [cart, setCart] = useState([])
+    //const [done, setDone] = useState(false)
     const router = useRouter()
 
 
@@ -38,13 +39,17 @@ export default function ScanOut() {
     //QR code mehod
     const handleScan = (data) => {
         if (data) {
+            //if (!done) {
             const item = JSON.parse(data)
-
             const found = cart.find(itm => itm.id === item.id);
-
-            if (found === undefined) {
+            if (found === undefined) {//if already found do not add it
                 setCart([...cart, item])
+                //beep
+                var beepsound = new Audio('/beep.mp3');
+                beepsound.loop = false;
+                beepsound.play();
             }
+            //}
         }
 
     }
@@ -98,9 +103,10 @@ export default function ScanOut() {
 
                         {cart.map(result => {
                             return <li key={result.id} className="list-group-item d-flex justify-content-between align-items-center m-part">
-                                <img className="part-img " src={result.parts_img} />
-                                <span className="part-item  ">ID : {result.id}</span>
+                                <img className="part-img" src={result.parts_img} />
+                                <span className="part-item  ">ID :{result.id}</span>
                                 <span className="part-item  ">Title : {result.part_title}</span>
+                                <span className="part-item  ">Supplier : {result.supplier_name}</span>
                             </li>
                         })}
                     </div>

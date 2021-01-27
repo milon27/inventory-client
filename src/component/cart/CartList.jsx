@@ -44,7 +44,7 @@ export default function CartList() {
         //tmp make all 0
         setCart(cart => {
             const arr = cart.map(itm => {
-                itm.part_stock = 0
+                itm.part_stock = 1
                 return itm;
             })
             return arr;
@@ -118,14 +118,9 @@ export default function CartList() {
         <div>
             <div className="container">
                 <section className="mt-5 mb-4">
-
-
                     <div className="row">
-
                         {/* sidebar start */}
-
                         <div className="col-lg-4">
-
                             <div className="card mb-4">
                                 <div className="card-body">
                                     <h5 className="mb-3">Order Information</h5>
@@ -167,24 +162,26 @@ export default function CartList() {
                                                         <div>
                                                             <h5>Title: {itm.part_title}</h5>
 
-                                                            <p className="mb-3 text-muted text-uppercase small">Stock:
+                                                            {/* <p className="mb-3 text-muted text-uppercase small">Stock: */}
 
 
                                                             {/* {console.log("here", partlist.find(ii => ii.id === itm.id))} */}
-                                                                {(partlist.find(ii => ii.id === itm.id) !== undefined) ? partlist.find(ii => ii.id === itm.id).part_stock : ""}
+                                                            {/* {(partlist.find(ii => ii.id === itm.id) !== undefined) ? partlist.find(ii => ii.id === itm.id).part_stock : ""} */}
 
-                                                            </p>
+                                                            {/* </p> */}
                                                             <p className="mb-3 text-muted text-uppercase small">ID: {itm.id}</p>
+                                                            <p className="mb-3 text-muted text-uppercase small">Quantity: {itm.part_stock}</p>
+                                                            <p className="mb-3 text-muted text-uppercase small">Supplier: {itm.supplier_name}</p>
                                                         </div>
-                                                        <div>
+                                                        {/* <div>
                                                             <div className="def-number-input number-input safari_only mb-0 w-100">
                                                                 <input id={itm.id} onChange={stockChange} className="form-control" min="1" name="quantity" value={itm.part_stock}
                                                                     type="number" />
                                                             </div>
                                                             <small id="passwordHelpBlock" className="form-text text-muted text-center">
                                                                 (Quantity)
-                                                        </small>
-                                                        </div>
+                                                            </small>
+                                                        </div> */}
                                                     </div>
                                                     <div className="d-flex justify-content-between align-items-center">
                                                         <div>
