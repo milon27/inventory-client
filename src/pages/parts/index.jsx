@@ -16,13 +16,15 @@ import ModalAddPart from "../../component/layout/modal/ModalAddPart";
 import moment from 'moment';
 import Exceljs from 'exceljs';
 import { saveAs } from "file-saver";
+import AppAction from "../../utils/actions/AppAction";
 
 
 
 export default function index() {//{ data }
 
     const { app, partlist } = useContext(StateContext)
-    const { partlistDispatch } = useContext(DispatchContext)
+    const { partlistDispatch, appDispatch } = useContext(DispatchContext)
+
 
     const initState = {
         id: null,
@@ -48,9 +50,11 @@ export default function index() {//{ data }
         // });
 
         const loadpart = async () => {
+            AppAction.getInstance(appDispatch).START_LOADING();
             ListAction.getSource()
             const res = await ListAction.getInstance(partlistDispatch).getAll(Define.part_collection)
             const arr = res.data
+            AppAction.getInstance(appDispatch).STOP_LOADING();
             setData(arr)
         }
         loadpart()

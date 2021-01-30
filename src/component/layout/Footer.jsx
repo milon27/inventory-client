@@ -6,7 +6,7 @@ export default function Footer() {
                 <div className="row">
                     <div className="col-md-12 text-center">
                         <p className="pt-3">
-                            © developed by - <a href="https://www.fiverr.com/milon27">milon27</a>
+                            © developed by - <a href="https://milon27.web.app/">milon27</a>
                         </p>
                     </div>
                 </div>

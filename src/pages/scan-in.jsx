@@ -95,7 +95,7 @@ export default function scanIn() {
                     <div className="col-md-4 col-sm-6 col-xs-12">
                         {process.browser ?
                             <QrReader
-                                delay={50}
+                                delay={10}
                                 onError={handleError}
                                 onScan={handleScan}
                                 style={{ width: '100%' }}

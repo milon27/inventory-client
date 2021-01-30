@@ -57,7 +57,23 @@ export default function ScanOut() {
         console.error(err)
     }
 
+    const onDelete = (e) => {
 
+        if (confirm("are you sure to delete?")) {
+            const ii = e.target.nodeName
+            if (ii === "I") {
+                //delete the item
+                const id = e.target.id
+                const arr = cart.filter(itm => itm.id !== id)
+                console.log(arr);
+                setCart(arr)
+            }
+        } else {
+            console.log("cancel");
+        }
+
+
+    }
     return (
         <>
             <Header title="Scan Out" />
@@ -76,7 +92,7 @@ export default function ScanOut() {
                         <div>
                             {process.browser ?
                                 <QrReader
-                                    delay={50}
+                                    delay={10}
                                     onError={handleError}
                                     onScan={handleScan}
                                     style={{ width: '100%' }}
@@ -93,13 +109,13 @@ export default function ScanOut() {
                             </div>
                         </> : <></>}
                         <div className="my-3 text-center">
-                            <button onClick={gotoCart} className="btn btn-primary mx-3">Confrim Scan Out</button>
+                            <button onClick={gotoCart} className="btn btn-primary mx-3">Confirm Scan Out</button>
                         </div>
 
                     </div>
 
                     {/*  */}
-                    <div className="col-md-8 col-sm-6 col-xs-12">
+                    <div className="col-md-8 col-sm-6 col-xs-12" onClick={onDelete}>
 
                         {cart.map(result => {
                             return <li key={result.id} className="list-group-item d-flex justify-content-between align-items-center m-part">
@@ -107,6 +123,7 @@ export default function ScanOut() {
                                 <span className="part-item  ">ID :{result.id}</span>
                                 <span className="part-item  ">Title : {result.part_title}</span>
                                 <span className="part-item  ">Supplier : {result.supplier_name}</span>
+                                <span className="part-item"><i id={result.id} className="fa fa-trash"></i></span>
                             </li>
                         })}
                     </div>
