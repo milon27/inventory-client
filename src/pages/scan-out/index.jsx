@@ -58,18 +58,20 @@ export default function ScanOut() {
     }
 
     const onDelete = (e) => {
+        const ii = e.target.nodeName
 
-        if (confirm("are you sure to delete?")) {
-            const ii = e.target.nodeName
-            if (ii === "I") {
+        if (ii === "I") {
+            if (confirm("are you sure to delete?")) {
+
                 //delete the item
                 const id = e.target.id
                 const arr = cart.filter(itm => itm.id !== id)
                 console.log(arr);
                 setCart(arr)
+
+            } else {
+                console.log("cancel");
             }
-        } else {
-            console.log("cancel");
         }
 
 

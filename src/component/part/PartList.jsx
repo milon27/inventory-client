@@ -10,7 +10,7 @@ export default function PartList({ data }) {
 
     const { partlist, setInput } = data
 
-    const { app } = useContext(StateContext)
+    const { auth } = useContext(StateContext)
     const { appDispatch, partlistDispatch } = useContext(DispatchContext)
 
     //on edit click
@@ -82,8 +82,15 @@ export default function PartList({ data }) {
                                     <span className="part-item ">
                                         <button id={item.id} btn="edit" className="btn btn-primary badge-pill px-4 mx-3" data-toggle="modal" data-target="#addPart">
                                             Edit</button>
-                                        <button id={item.id} type="button" className="btn btn-danger badge-pill px-4">
-                                            Delete</button>
+
+
+                                        {auth.role === Define.S_ADMIN ?
+                                            <>
+                                                <button id={item.id} type="button" className="btn btn-danger badge-pill px-4">
+                                                    Delete</button>
+                                            </>
+                                            : <></>}
+
                                     </span>
                                 </li>
 

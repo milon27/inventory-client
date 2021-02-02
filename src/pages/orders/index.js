@@ -73,6 +73,7 @@ export default function Orders({ data }) {
                                         <th scope="col">SO Number</th>
                                         <th scope="col">Admin ID</th>
                                         <th scope="col">Customer Name</th>
+                                        <th scope="col">Order Date</th>
                                         <th scope="col">Order Desc</th>
                                         <th scope="col">Options</th>
                                     </tr>
@@ -87,6 +88,7 @@ export default function Orders({ data }) {
 
                                             }</td>
                                             <td>{item.customer_name}</td>
+                                            <td>{item.order_date}</td>
                                             <td>{item.order_desc}</td>
                                             <td>
                                                 <Link href={`/orders/${item.id}`}>

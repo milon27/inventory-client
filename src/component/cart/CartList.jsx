@@ -6,7 +6,7 @@ import ListAction from './../../utils/actions/ListAction';
 import AppAction from './../../utils/actions/AppAction';
 import Response from './../../utils/Response';
 import Types from '../../utils/actions/Types';
-
+import moment from 'moment';
 
 
 export default function CartList() {
@@ -20,11 +20,14 @@ export default function CartList() {
             : []
     )
 
+    const [error, setError] = useState(false)
+
     const orderinfoinit = {
         so_num: "",
         admin_id: "",
         customer_name: "",
         order_desc: "",
+        order_date: moment(new Date()).format("DD-MM-YYYY"),
         product_list: []
     }
     const [orderInfo, setOrderInfo] = useState(orderinfoinit)
@@ -41,6 +44,7 @@ export default function CartList() {
         }
         loadpart()
 
+
         //tmp make all 0
         setCart(cart => {
             const arr = cart.map(itm => {
@@ -49,7 +53,18 @@ export default function CartList() {
             })
             return arr;
         })
-    }, [])
+
+        //ck stock problem
+        cart.forEach(itm => {
+            if (partlist.find(ii => ii.id === itm.id) !== undefined) {
+                if (partlist.find(ii => ii.id === itm.id).part_stock <= 0) {
+                    console.log("we are here");
+                    setError(true)
+                }
+            }
+        });
+        //console.log("loading..");
+    }, [partlist.length])
 
     //stockChange
     const stockChange = (e) => {
@@ -73,6 +88,28 @@ export default function CartList() {
 
     }
 
+
+    const onDelete = (e) => {
+        const ii = e.target.nodeName
+        if (ii === "BUTTON" || ii==="I") { 
+            if (confirm("are you sure to delete?")) {
+
+                //delete the item
+                const id = e.target.id
+                const arr = cart.filter(itm => itm.id !== id)
+                console.log(arr);
+                setCart(arr)
+                //update the localstorage
+                if (process.browser) {
+                    localStorage.setItem(Define.CART_LOCAL, JSON.stringify(arr))
+                }
+
+            } else {
+                console.log("cancel");
+            }
+        }
+    }
+
     //onCustomerChnage
     const onCustomerChnage = (e) => {
         setOrderInfo({ ...orderInfo, [e.target.name]: e.target.value })
@@ -89,8 +126,17 @@ export default function CartList() {
     //completeOrder
     const completeOrder = async () => {
 
+        //ck stock error
+        if (error) {
+            alert("Stock Not Available On Some Parts,Remove all out of stock parts")
+            return
+        }
+
+
+
         orderInfo['product_list'] = cart
         orderInfo['admin_id'] = auth.id
+        orderInfo['order_date'] =  moment(new Date()).format("DD-MM-YYYY").toString()
 
         if (cart.length === 0 || orderInfo['so_num'] === "" || orderInfo['customer_name'] === "") {
             AppAction.getInstance(appDispatch).SET_RESPONSE(Response(false, "Enter All Field Value", "Add Some parts in the cart", "danger"));
@@ -162,13 +208,19 @@ export default function CartList() {
                                                         <div>
                                                             <h5>Title: {itm.part_title}</h5>
 
-                                                            {/* <p className="mb-3 text-muted text-uppercase small">Stock: */}
+                                                            <p className="mb-3 text-muted text-uppercase small">Stock :
 
 
                                                             {/* {console.log("here", partlist.find(ii => ii.id === itm.id))} */}
-                                                            {/* {(partlist.find(ii => ii.id === itm.id) !== undefined) ? partlist.find(ii => ii.id === itm.id).part_stock : ""} */}
+                                                                <span className="text-danger">
+                                                                    {(partlist.find(ii => ii.id === itm.id) !== undefined) ? partlist.find(ii => ii.id === itm.id).part_stock > 0 ? partlist.find(ii => ii.id === itm.id).part_stock : <>
+                                                                        Out Of Stock
+                                                                        
+                                                                    </> : ""}
+                                                                </span>
 
-                                                            {/* </p> */}
+
+                                                            </p>
                                                             <p className="mb-3 text-muted text-uppercase small">ID: {itm.id}</p>
                                                             <p className="mb-3 text-muted text-uppercase small">Quantity: {itm.part_stock}</p>
                                                             <p className="mb-3 text-muted text-uppercase small">Supplier: {itm.supplier_name}</p>
@@ -185,7 +237,7 @@ export default function CartList() {
                                                     </div>
                                                     <div className="d-flex justify-content-between align-items-center">
                                                         <div>
-                                                            {/* <button className="btn btn-danger"><i className="fa fa-trash "></i> Remove item</button> */}
+                                                            <button id={itm.id} onClick={onDelete} className="btn btn-danger"><i id={itm.id} className="fa fa-trash "></i> Remove item</button>
                                                         </div>
                                                     </div>
                                                 </div>
