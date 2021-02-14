@@ -64,7 +64,7 @@ export default function Part({ part }) {
                                         <QRCode
                                             className="qr-img"
                                             id="123456"
-                                            value={JSON.stringify(part)}
+                                            value={part.id}
                                             size={290}
                                             level={"H"}
                                             includeMargin={true}

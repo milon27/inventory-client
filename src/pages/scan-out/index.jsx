@@ -14,10 +14,12 @@ import Footer from "../../component/layout/Footer";
 import AppAction from './../../utils/actions/AppAction';
 import { DispatchContext } from "../../utils/context/AppContext";
 import Response from './../../utils/Response';
+import ListAction from "../../utils/actions/ListAction";
 
 
 export default function ScanOut() {
     const [cart, setCart] = useState([])
+    const [ids, setIds] = useState([])
     //const [done, setDone] = useState(false)
     const router = useRouter()
 
@@ -37,13 +39,25 @@ export default function ScanOut() {
     }
 
     //QR code mehod
+    const loadingData = async (id) => {
+        ListAction.getSource();
+        const res = await ListAction.getOne(Define.part_collection, id)
+        const part = res.data
+        //console.log("we are here. ", part);
+        setCart([...cart, part])
+    }
+
+
     const handleScan = (data) => {
         if (data) {
             //if (!done) {
-            const item = JSON.parse(data)
-            const found = cart.find(itm => itm.id === item.id);
+            const id = data
+            const found = ids.find(itm => itm === id);
+
             if (found === undefined) {//if already found do not add it
-                setCart([...cart, item])
+                setIds([...ids, id])
+
+                loadingData(id)
                 //beep
                 var beepsound = new Audio('/beep.mp3');
                 beepsound.loop = false;
@@ -65,8 +79,11 @@ export default function ScanOut() {
 
                 //delete the item
                 const id = e.target.id
+
+                const id_arr = ids.filter(itm => itm !== id)
+                setIds(id_arr)
+
                 const arr = cart.filter(itm => itm.id !== id)
-                console.log(arr);
                 setCart(arr)
 
             } else {

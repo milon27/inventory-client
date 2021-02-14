@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import Alert from '../component/layout/Alert'
 import Body from '../component/layout/Body'
 import Header from '../component/layout/Header'
@@ -13,20 +13,24 @@ import AppAction from './../utils/actions/AppAction';
 import Response from './../utils/Response';
 import ProtectedContent from './../component/ProtectedContent';
 import Footer from '../component/layout/Footer'
+import Define from './../utils/Define';
 
 
 export default function scanIn() {
 
     const { appDispatch, partlistDispatch } = useContext(DispatchContext)
     const [result, setResult] = useState({})
+
     const [done, setDone] = useState(false)
 
+    const loadingData = async (id) => {
+        ListAction.getSource();
+        const res = await ListAction.getOne(Define.part_collection, id)
+        const part = res.data
+        //console.log("we are here. ", part);
+        setResult(part)
+    }
 
-    // function play() {
-    //     var beepsound = new Audio(
-    //         'https://www.soundjay.com/button/sounds/beep-01a.mp3');
-    //     beepsound.play();
-    // }
 
     const onClear = () => {
         setDone(false)
@@ -35,7 +39,8 @@ export default function scanIn() {
     const handleScan = (data) => {
         if (data) {
             if (!done) {
-                setResult(JSON.parse(data))
+                const id = data
+                loadingData(id)
                 var beepsound = new Audio('/beep.mp3');
                 beepsound.loop = false;
                 beepsound.play();
@@ -49,12 +54,12 @@ export default function scanIn() {
 
 
     //on update the quantity
+    //require only id
     const onUpdate = () => {
         if (result.id === undefined) {
             AppAction.getInstance(appDispatch).SET_RESPONSE(Response(false, "Scan In Some Part First", "Scan then click on confirm Scan In", "danger"));
             return
         }
-
 
         AppAction.getInstance(appDispatch).START_LOADING();
 
@@ -104,46 +109,45 @@ export default function scanIn() {
                             <></>}
                     </div>
                     <div className="col-md-8 col-sm-6 col-xs-12">
-                        <li key={result.id} className="list-group-item d-flex justify-content-around align-items-center m-part">
-                            <img className="part-img " src={result.parts_img} />
-                            <span className="part-item  ">ID : {result.id}</span>
-                            <span className="part-item  ">Title : {result.part_title}</span>
-                            {/* <span className="part-item ">Quantity : {result.part_stock}</span> */}
-                            {(typeof window !== "undefined" && window.innerWidth <= 700) ? <>
-                                <div className="row mt-2">
-                                    <div className="col-md-12">
-                                        <Alert />
-                                        <Loading color="info" />
+                        {result ? <>
+
+                            <li key={result.id} className="list-group-item d-flex justify-content-around align-items-center m-part">
+                                <img className="part-img " src={result.parts_img} />
+                                <span className="part-item  ">ID : {result.id}</span>
+                                <span className="part-item  ">Title : {result.part_title}</span>
+                                {/* <span className="part-item ">Quantity : {result.part_stock}</span> */}
+                                {(typeof window !== "undefined" && window.innerWidth <= 700) ? <>
+                                    <div className="row mt-2">
+                                        <div className="col-md-12">
+                                            <Alert />
+                                            <Loading color="info" />
+                                        </div>
                                     </div>
+                                </> : <></>}
+
+                                <span className="part-item ">
+                                    <button onClick={onUpdate} className="btn btn-primary mx-3">Confirm Scan In</button>
+                                </span>
+
+                                <span className="part-item ">
+                                    <button onClick={onClear} className="btn btn-danger mx-3">Clear Scan List</button>
+                                </span>
+                            </li>
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <ul className="list-group" >
+                                        <li className="list-group-item d-flex flex-column">
+                                            <span className="my-2">Brand : {result.brand}</span>
+                                            <span className="my-2">Manufacturer Part Num : {result.manufacturer_part_num}</span>
+                                            <span className="my-2">Store Location : {result.store_location}</span>
+                                            <span className="my-2">Supplier Name : {result.supplier_name}</span>
+                                            <span className="my-2">Purchased Date : {result.purchased_date}</span>
+                                        </li>
+                                    </ul>
                                 </div>
-                            </> : <></>}
-
-
-                            <span className="part-item ">
-                                <button onClick={onUpdate} className="btn btn-primary mx-3">Confirm Scan In</button>
-                            </span>
-
-                            <span className="part-item ">
-                                <button onClick={onClear} className="btn btn-danger mx-3">Clear Scan List</button>
-                            </span>
-
-                        </li>
-
-
-
-                        <div className="row">
-                            <div className="col-md-12">
-                                <ul className="list-group" >
-                                    <li className="list-group-item d-flex flex-column">
-                                        <span className="my-2">Brand : {result.brand}</span>
-                                        <span className="my-2">Manufacturer Part Num : {result.manufacturer_part_num}</span>
-                                        <span className="my-2">Store Location : {result.store_location}</span>
-                                        <span className="my-2">Supplier Name : {result.supplier_name}</span>
-                                        <span className="my-2">Purchased Date : {result.purchased_date}</span>
-                                    </li>
-                                </ul>
                             </div>
-                        </div>
+                        </> : <>loading data from server...</>}
+
                     </div>
 
                 </div>

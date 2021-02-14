@@ -58,7 +58,7 @@ export default function CartList() {
         cart.forEach(itm => {
             if (partlist.find(ii => ii.id === itm.id) !== undefined) {
                 if (partlist.find(ii => ii.id === itm.id).part_stock <= 0) {
-                    console.log("we are here");
+                    //console.log("we are here");
                     setError(true)
                 }
             }
@@ -131,8 +131,6 @@ export default function CartList() {
             alert("Stock Not Available On Some Parts,Remove all out of stock parts")
             return
         }
-
-
 
         orderInfo['product_list'] = cart
         orderInfo['admin_id'] = auth.id
