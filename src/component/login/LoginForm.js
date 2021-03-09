@@ -64,6 +64,12 @@ export default function LoginForm({ onSubmit, onChangeEmail, onChangePassword, e
                                         </div>
                                     </div>
                                     {/* row end here */}
+                                    <div className="row text-center">
+                                        <div className="col-md-12">
+                                            <p>super admin email: super-admin@gmail.com</p>
+                                            <p>admin email: admin@gmail.com</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
