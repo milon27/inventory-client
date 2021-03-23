@@ -59,7 +59,7 @@ export default function Header({ title }) {
                                 <a className="nav-link">Cart List</a>
                             </Link>
 
-                            <Link className="nav-item active" href="#">
+                            <Link className="nav-item active" href={URL.ORDER_LIST}>
                                 <a className="nav-link">Order List</a>
                             </Link>
 

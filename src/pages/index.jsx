@@ -104,7 +104,7 @@ export default function Home() {
                     </div>
                     <div className="media-body text-right">
                       <p>Orders History</p>
-                      <span><Link href="#"><a className="btn btn-danger">View Details</a></Link></span>
+                      <span><Link href={URL.ORDER_LIST}><a className="btn btn-danger">View Details</a></Link></span>
                     </div>
                   </div>
                 </div>
