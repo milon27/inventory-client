@@ -51,8 +51,7 @@ export default function Header({ title }) {
                             </Link>
 
 
-
-                            {/* <Link className="nav-item active" href={URL.SCAN_OUT}>
+                            <Link className="nav-item active" href={URL.SCAN_OUT}>
                                 <a className="nav-link">Scan Out</a>
                             </Link>
 
@@ -60,12 +59,9 @@ export default function Header({ title }) {
                                 <a className="nav-link">Cart List</a>
                             </Link>
 
-                            <Link className="nav-item active" href={URL.ORDER_LIST}>
+                            <Link className="nav-item active" href="#">
                                 <a className="nav-link">Order List</a>
                             </Link>
-                             */}
-
-
 
 
                             {auth.role === Define.S_ADMIN ?
