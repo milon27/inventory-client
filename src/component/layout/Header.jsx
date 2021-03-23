@@ -29,7 +29,7 @@ export default function Header({ title }) {
                 <nav className="navbar navbar-expand-lg navbar-light bg-light px-5">
 
                     <Link href={URL.HOME}>
-                        <a className="navbar-brand" ><h4 className="text-primary">Juz Air</h4></a>
+                        <a className="navbar-brand" ><h4 className="text-primary">Inventory</h4></a>
                     </Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -49,16 +49,25 @@ export default function Header({ title }) {
                             <Link className="nav-item active" href={URL.SCAN_IN}>
                                 <a className="nav-link">Scan In</a>
                             </Link>
-                            <Link className="nav-item active" href={URL.SCAN_OUT}>
+
+
+
+                            {/* <Link className="nav-item active" href={URL.SCAN_OUT}>
                                 <a className="nav-link">Scan Out</a>
                             </Link>
 
                             <Link className="nav-item active" href={URL.CART_LIST}>
                                 <a className="nav-link">Cart List</a>
                             </Link>
+
                             <Link className="nav-item active" href={URL.ORDER_LIST}>
                                 <a className="nav-link">Order List</a>
                             </Link>
+                             */}
+
+
+
+
                             {auth.role === Define.S_ADMIN ?
                                 <Link className="nav-item active" href={URL.USER_LIST}>
                                     <a className="nav-link">User List</a>

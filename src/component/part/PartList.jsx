@@ -61,7 +61,7 @@ export default function PartList({ data }) {
             <div className="row">
                 <div className="col-md-12">
                     <ul className="list-group" onClick={onClickHandle}>
-                        {partlist.map(item => {
+                        {partlist.length > 0 ? partlist.map(item => {
                             return (
 
                                 <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center m-part">
@@ -95,7 +95,7 @@ export default function PartList({ data }) {
                                 </li>
 
                             )
-                        })}
+                        }) : <h2>No part Available,Add new part</h2>}
                     </ul>
                 </div>
             </div>
