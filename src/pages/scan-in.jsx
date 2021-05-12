@@ -57,7 +57,7 @@ export default function scanIn() {
     //require only id
     const onUpdate = () => {
         if (result.id === undefined) {
-            AppAction.getInstance(appDispatch).SET_RESPONSE(Response(false, "Scan In Some Part First", "Scan then click on confirm Scan In", "danger"));
+            AppAction.getInstance(appDispatch).SET_RESPONSE(Response(false, "Scan In Some Product First", "Scan then click on confirm Scan In", "danger"));
             return
         }
 
@@ -73,7 +73,7 @@ export default function scanIn() {
         ListAction.getInstance(partlistDispatch).updateStock(`v1/up-data/${collection}/${id}/${field}/${inc_dec}`, inc_dec, field)
             .then(res => {
                 AppAction.getInstance(appDispatch).STOP_LOADING();
-                AppAction.getInstance(appDispatch).SET_RESPONSE(Response(true, res.message, `Part Stock Updated Successfully`, "success"));
+                AppAction.getInstance(appDispatch).SET_RESPONSE(Response(true, res.message, `Product Stock Updated Successfully`, "success"));
                 AppAction.getInstance(appDispatch).RELOAD();
                 onClear()
             }).catch(e => {
@@ -138,7 +138,7 @@ export default function scanIn() {
                                     <ul className="list-group" >
                                         <li className="list-group-item d-flex flex-column">
                                             <span className="my-2">Brand : {result.brand}</span>
-                                            <span className="my-2">Manufacturer Part Num : {result.manufacturer_part_num}</span>
+                                            <span className="my-2">Manufacturer Num : {result.manufacturer_part_num}</span>
                                             <span className="my-2">Store Location : {result.store_location}</span>
                                             <span className="my-2">Supplier Name : {result.supplier_name}</span>
                                             <span className="my-2">Purchased Date : {result.purchased_date}</span>

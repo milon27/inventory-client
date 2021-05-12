@@ -28,7 +28,7 @@ export default function Home() {
                       <i className="icon-pencil text-primary float-left" style={{ fontSize: '3rem' }}></i>
                     </div>
                     <div className="media-body text-right">
-                      <p>All Part List</p>
+                      <p>All Product List</p>
                       <span><Link href={URL.PART_LIST}><a className="btn btn-primary">View Details</a></Link></span>
                     </div>
                   </div>

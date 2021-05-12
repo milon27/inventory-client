@@ -145,7 +145,7 @@ export default function index() {//{ data }
 
     return (
         <>
-            <Header title="Parts List" />
+            <Header title="Product List" />
             <ProtectedContent url={URL.PART_LIST} />
             <Body>
                 <div className="container">
@@ -158,15 +158,15 @@ export default function index() {//{ data }
                     <div className="row py-4">
                         <ModalAddPart id="addPart" value={{ input, setInput, initState }} />
                         <div className="col-md-6 m27-mb-3">
-                            <h4>All Part List</h4>
-                            <input className="form-control" placeholder="Search by parts title,supplier,purchase date" onChange={searchNow} />
+                            <h4>All Product List</h4>
+                            <input className="form-control" placeholder="Search by Products title,supplier,purchase date" onChange={searchNow} />
                         </div>
                         <div className="col-md-6 m27-d-text-right">
                             {/* open modal form when click on it */}
                             <button onClick={generatePdf} type="button" className="btn btn-info badge-pill px-4 m27-w100 m27-mb-3 " >
                                 Generate Excel</button>
                             <button type="button" className="btn btn-primary badge-pill px-4 m27-w100 m27-mb-3 m27-d-ml-3" data-toggle="modal" data-target="#addPart">
-                                Add New Part</button>
+                                Add New Product</button>
                         </div>
                     </div>
                 </div>

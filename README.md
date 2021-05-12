@@ -13,5 +13,5 @@ ___
 * Multi User (Super Admin , Admin)
 
 ___
-[Live Demo](https://inventory-vercel-next-client-only.vercel.app/)
+[Live Demo](https://m27inventory.web.app/)
 

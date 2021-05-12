@@ -32,7 +32,7 @@ export default function SingleOrder({ order, partlist }) {
 
                     <div className="row">
                         <div className="col-md-12">
-                            <h3 className="my-3">Order Part List</h3>
+                            <h3 className="my-3">Order Product List</h3>
                             <ul className="list-group">
                                 {partlist.map(item => {
                                     return (

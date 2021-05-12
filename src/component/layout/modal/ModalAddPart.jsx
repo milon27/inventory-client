@@ -52,7 +52,7 @@ export default function ModalAddPart(props) {
         //update
         ListAction.getInstance(partlistDispatch).updateData(`v1/add-data/part_collection`, input).then(res => {
             AppAction.getInstance(appDispatch).STOP_LOADING();
-            AppAction.getInstance(appDispatch).SET_RESPONSE(Response(true, res.message, `Part Updated Successfully`, "success"));
+            AppAction.getInstance(appDispatch).SET_RESPONSE(Response(true, res.message, `Product Updated Successfully`, "success"));
             AppAction.getInstance(appDispatch).RELOAD();
             setInput(initState);
         }).catch(e => {
@@ -61,12 +61,12 @@ export default function ModalAddPart(props) {
         });
     }
     const addNewPart = (input) => {
-        console.log("adding new part");
+        console.log("adding new Product");
 
         //update
         ListAction.getInstance(partlistDispatch).addData(`v1/add-data/part_collection`, input).then(res => {
             AppAction.getInstance(appDispatch).STOP_LOADING();
-            AppAction.getInstance(appDispatch).SET_RESPONSE(Response(true, res.message, `Part Updated Successfully`, "success"));
+            AppAction.getInstance(appDispatch).SET_RESPONSE(Response(true, res.message, `Product Updated Successfully`, "success"));
             AppAction.getInstance(appDispatch).RELOAD();
             setInput(initState);
         }).catch(e => {
@@ -128,8 +128,8 @@ export default function ModalAddPart(props) {
     return (
         <Modal
             id={props.id}
-            title="Add New Part"
-            btnTitle="Add Part Now"
+            title="Add New Product"
+            btnTitle="Add Product Now"
             callback={onSubmit}
             resetInput={{ setInput, initState }}
         >
@@ -139,18 +139,18 @@ export default function ModalAddPart(props) {
                         <div className="form-row">
                             <div className="form-group col-md-12">
                                 {input ? <>
-                                    <Input name="part_title" title="Part Title" value={input.part_title} onChange={onChange} />
+                                    <Input name="part_title" title="Product Title" value={input.part_title} onChange={onChange} />
 
                                     {(input.id == null || input.id == undefined) ? "" :
                                         <>
 
                                             {auth.role === Define.S_ADMIN ?
                                                 <>
-                                                    <label htmlFor="">Part Stock :</label>
+                                                    <label htmlFor="">Product Stock :</label>
                                                     <input type="number"
                                                         className="form-control"
                                                         name="part_stock"
-                                                        placeholder="Part Stock"
+                                                        placeholder="Product Stock"
                                                         value={input.part_stock}
                                                         onChange={onChange}
                                                     />
@@ -161,12 +161,12 @@ export default function ModalAddPart(props) {
                                     }
 
 
-                                    <Input name="brand" title="Part Brand" value={input.brand} onChange={onChange} />
-                                    <Input name="manufacturer_part_num" title="Manufacturer Part Num" value={input.manufacturer_part_num} onChange={onChange} />
-                                    <Input name="part_desc" title="Part Desc" value={input.part_desc} onChange={onChange} />
+                                    <Input name="brand" title="Product Brand" value={input.brand} onChange={onChange} />
+                                    <Input name="manufacturer_part_num" title="Manufacturer Num" value={input.manufacturer_part_num} onChange={onChange} />
+                                    <Input name="part_desc" title="Product Desc" value={input.part_desc} onChange={onChange} />
                                     <Input name="store_location" title="Store Location" value={input.store_location} onChange={onChange} />
                                     <Input name="supplier_name" title="Supplier Name" value={input.supplier_name} onChange={onChange} />
-                                    <Input title="Parts Image" onChange={onChangeFile} type="file" />
+                                    <Input title="Product Image" onChange={onChangeFile} type="file" />
                                 </> : <></>}
                             </div>
                         </div>

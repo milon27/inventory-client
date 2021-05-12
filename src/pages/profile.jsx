@@ -6,6 +6,7 @@ import { DispatchContext, StateContext } from './../utils/context/AppContext';
 import ProtectedContent from './../component/ProtectedContent';
 import AuthAction from './../utils/actions/AuthAction';
 import { useRouter } from 'next/router';
+import Define from '../utils/Define';
 
 
 export default function profile() {
@@ -30,8 +31,9 @@ export default function profile() {
                         <div className="col-md-12">
                             <h3 className="my-3">User Information</h3>
                             <p className="my-3">ID: {auth.id}</p>
-                            <p className="my-3">Email: {auth.email}</p>
-                            <p className="my-3">Role: {auth.role}</p>
+                            <p className="my-3">Name: {auth?.name}</p>
+                            <p className="my-3">Email: {auth?.email}</p>
+                            <p className="my-3">Role: {auth?.role === Define.ADMIN ? "Admin" : "Super Admin"}</p>
                             <button onClick={logOutNow} type="button" className="btn btn-primary badge-pill px-4 mx-2" >
                                 Log out</button>
                         </div>

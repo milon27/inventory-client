@@ -41,7 +41,7 @@ export default function Orders({ data }) {
 
     const getAdminName = (id) => {
 
-        const found = userlist.find(element => element.id.trim() == id.trim());
+        const found = userlist.find(element => element.id.trim() == id.trim()); 
         if (found) {
             if (found.name !== undefined) {
                 return found.name
@@ -71,7 +71,7 @@ export default function Orders({ data }) {
                                 <thead className="bg-primary text-light">
                                     <tr>
                                         <th scope="col">SO Number</th>
-                                        <th scope="col">Admin ID</th>
+                                        <th scope="col">Admin Name</th>
                                         <th scope="col">Customer Name</th>
                                         <th scope="col">Order Date</th>
                                         <th scope="col">Order Desc</th>

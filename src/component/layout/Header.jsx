@@ -43,7 +43,7 @@ export default function Header({ title }) {
                             </Link>
 
                             <Link className="nav-item active" href={URL.PART_LIST}>
-                                <a className="nav-link">All Parts </a>
+                                <a className="nav-link">All Product </a>
                             </Link>
 
                             <Link className="nav-item active" href={URL.SCAN_IN}>

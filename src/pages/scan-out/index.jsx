@@ -28,7 +28,7 @@ export default function ScanOut() {
 
     const gotoCart = () => {
         if (cart.length === 0) {
-            AppAction.getInstance(appDispatch).SET_RESPONSE(Response(false, "Scan Out Some Part First", "Scan then click on confirm Scan Out", "danger"));
+            AppAction.getInstance(appDispatch).SET_RESPONSE(Response(false, "Scan Out Some Product First", "Scan then click on confirm Scan Out", "danger"));
             return
         }
         //update the localstorage

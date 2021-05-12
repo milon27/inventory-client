@@ -128,7 +128,7 @@ export default function CartList() {
 
         //ck stock error
         if (error) {
-            alert("Stock Not Available On Some Parts,Remove all out of stock parts")
+            alert("Stock Not Available On Some Product,Remove all out of stock parts")
             return
         }
 

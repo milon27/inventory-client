@@ -38,7 +38,7 @@ export default function PartList({ data }) {
             AppAction.getInstance(appDispatch).START_LOADING();
             ListAction.getInstance(partlistDispatch).deleteData(`v1/delete/${Define.part_collection}/${selected.id}`, selected.id).then(res => {
                 AppAction.getInstance(appDispatch).STOP_LOADING();
-                AppAction.getInstance(appDispatch).SET_RESPONSE(Response(true, res.message, `Part Deleted Successfully`, "success"));
+                AppAction.getInstance(appDispatch).SET_RESPONSE(Response(true, res.message, `Product Deleted Successfully`, "success"));
                 AppAction.getInstance(appDispatch).RELOAD();
             }).catch(e => {
                 AppAction.getInstance(appDispatch).STOP_LOADING();
@@ -95,7 +95,7 @@ export default function PartList({ data }) {
                                 </li>
 
                             )
-                        }) : <h2>No part Available,Add new part</h2>}
+                        }) : <h2>No Product Available,Add new Product</h2>}
                     </ul>
                 </div>
             </div>
