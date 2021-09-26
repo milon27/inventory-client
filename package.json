@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "fdeploy": "npm run build && firebase deploy --only hosting,functions:juzNextFun"
+    "start": "next start"
   },
   "dependencies": {
     "axios": "^0.21.1",

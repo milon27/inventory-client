@@ -2,13 +2,13 @@ import firebase from 'firebase/app'
 import 'firebase/storage'
 // TODO: Replace with your app's config object
 const firebaseConfig = {
-    apiKey: "",
-    authDomain: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: "",
-    measurementId: ""
+    apiKey: "" + process.env.apiKey,
+    authDomain: "" + process.env.authDomain,
+    projectId: "" + process.env.projectId,
+    storageBucket: "" + process.env.storageBucket,
+    messagingSenderId: "" + process.env.messagingSenderId,
+    appId: "" + process.env.appId,
+    measurementId: "" + process.env.measurementId
 };
 //firebase.initializeApp(firebaseConfig);
 
