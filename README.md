@@ -13,5 +13,5 @@ ___
 * Multi User (Super Admin , Admin)
 
 ___
-[Live Demo](https://m27inventory.web.app/)
+[API REPO](https://github.com/milon27/inventory-api)
 
